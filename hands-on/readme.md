@@ -28,11 +28,12 @@ Windows でも Mac でも良いです。
 それではここから実際に手を動かしながらやっていきましょう。
 
 ### 手順1:プロジェクトの作成
-最初にプロジェクトの作成からはじめます。
-Xamarin Staudio の新しいソリューションから新しいプロジェクト用のテンプレートを選択します。
+最初にプロジェクトの作成からはじめます。Xamarin Staudio の新しいソリューションから新しいプロジェクト用のテンプレートを選択します。
 今回は、Xamarin．Forms を利用して開発するため、Forms App を選択します。
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_1.png" width="520px">
 
-
+App Name には任意の名前（例：ArcGISXamarin）を入力して、Shard Code は、 『`Use Shared Libray`』を選択します。
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_2.png" width="520px">
 
 
 ### 手順2:ArcGIS Runtime SDK NuGet パッケージのインストール
