@@ -8,7 +8,7 @@
 ArcGIS Online で作成した WebMap を Xamarin.Forms で表示するアプリを作成します。 
 さらに作成したアプリに対して、ジオコーディングや空間検索などの機能を追加していきます。
 
-![](./image/architecture.png)
+![](https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/architecture.png)
 
 [WebMap](https://www.esrij.com/gis-guide/web-gis/web-map/) は、道路地図・地形図・衛星画像といったベースマップ（背景地図）の上に、ユーザーが持つデータや Web 上に存在する地図サービスを重ね合わせ、データの表示スタイルやポップアップ（マップ上でポイントなどをクリックした際に表示される情報ウィンドウ）を設定することができます。
 
