@@ -56,7 +56,7 @@ NuGet パッケージのインストールは、Android、iOS とそれぞれに
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_4.png" width="50%">
 
 以下のような「パッケージを追加画面」が起動しますので、検索項目の欄に esri と入力して検索を行います。
-いくつかパッケージが表示されますが、ここでは『Esri.ArcGISRuntime.Xamarin.Forms』を選択して、『Add Pakages』をクリックします。
+いくつかパッケージが表示されますが、ここでは 『ArcGISRuntime SDK for .NET - Xamarin.Forms』 を選択して、『Add Pakages』 をクリックします。
 
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_1.png" width="520px">
 
