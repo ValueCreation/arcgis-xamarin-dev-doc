@@ -41,9 +41,28 @@ App Name には任意の名前（例：ArcGISXamarin）を入力して、Shard C
 
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_3.png" width="520px">
 
+次に ArcGIS Runtime SDK for .NET のインストールを行っていきます。
 
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_4.png" width="520px">
 
 ### 手順2:ArcGIS Runtime SDK NuGet パッケージのインストール
+
+ArcGIS Runtime SDK for .NET は、NuGet パッケージからインストールすることができます。
+NuGet パッケージのインストールは、Android、iOS とそれぞれに対してインストールを行います。
+
+ソリューションの『パッケージ』を右クリックして、『パッケージの追加』をクリックします。
+
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_4.png" width="50%">
+
+以下のような「パッケージを追加画面」が起動しますので、検索項目の欄に esri と入力して検索を行います。
+いくつかパッケージが表示されますが、ここでは『Esri.ArcGISRuntime.Xamarin.Forms』を選択して、『Add Pakages』をクリックします。
+
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_4.png" width="520px">
+
+
+インストールに関しては、以下の URL からでも確認することができます。
+https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
+
 
 
 ### 手順3:WebMapの表示
