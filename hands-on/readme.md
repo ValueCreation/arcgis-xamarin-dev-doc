@@ -35,6 +35,9 @@ Windows でも Mac でも良いです。
 App Name には任意の名前（例：ArcGISXamarin）を入力して、Shard Code は、 『`Use Shared Libray`』を選択します。
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_2.png" width="520px">
 
+作成ボタンをクリックしてプロジェクトの作成を行います。
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_3.png" width="520px">
+
 
 ### 手順2:ArcGIS Runtime SDK NuGet パッケージのインストール
 
