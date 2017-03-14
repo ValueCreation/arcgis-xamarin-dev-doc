@@ -50,6 +50,7 @@ App Name には任意の名前（例：ArcGISXamarin）を入力して、Shard C
 ArcGIS Runtime SDK for .NET は、NuGet パッケージからインストールすることができます。
 NuGet パッケージのインストールは、Android、iOS とそれぞれに対してインストールを行います。
 
+#### Android
 ソリューションの『パッケージ』を右クリックして、『パッケージの追加』をクリックします。
 
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_4.png" width="50%">
@@ -57,7 +58,13 @@ NuGet パッケージのインストールは、Android、iOS とそれぞれに
 以下のような「パッケージを追加画面」が起動しますので、検索項目の欄に esri と入力して検索を行います。
 いくつかパッケージが表示されますが、ここでは『Esri.ArcGISRuntime.Xamarin.Forms』を選択して、『Add Pakages』をクリックします。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_4.png" width="520px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_1.png" width="520px">
+
+ライセンスの同意画面でライセンスに同意してパッケージの追加を行います。
+
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_2.png" width="520px">
+
+#### iOS
 
 
 インストールに関しては、以下の URL からでも確認することができます。
