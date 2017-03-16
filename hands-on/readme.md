@@ -150,7 +150,7 @@ namespace ArcGISXamarin
 
 ここまで作成したアプリについて以下の機能を追加してみましょう。
 
-#### 1. ジオコーディング
+### 1. ジオコーディング
 店舗情報や顧客情報などに含まれる住所情報を XY 座標に変換し地図上にマッピングすることができます。
 
 #### ArcGISXamarinPage.xaml
@@ -344,13 +344,20 @@ namespace ArcGISXamarin
 }
 ```
 
-##### アプリの実行
+#### アプリの実行
 
+実行後の画面はそれぞれ以下のようになります。
+
+#### iOS
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geocoding_ios.png" height="400px">
+
+#### Android
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geocoding_android.png" height="400px">
 
 #### 2. 空間解析
 重複するエリアの抽出や空間的な分布傾向の把握など、多様な空間解析機能を利用することができます。
 
-##### アプリの実行
+#### アプリの実行
 
 
 ##　宿題
