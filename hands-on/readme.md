@@ -45,7 +45,7 @@ App Name には任意の名前（例：ArcGISXamarin）を入力して、Shard C
 
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_4.png" width="520px">
 
-### 手順 2:ArcGIS Runtime SDK NuGet パッケージのインストール
+### 手順 2: ArcGIS Runtime SDK NuGet パッケージのインストール
 
 ArcGIS Runtime SDK for .NET は、NuGet パッケージからインストールすることができます。
 NuGet パッケージのインストールは、Android、iOS とそれぞれに対してインストールを行います。
@@ -78,18 +78,271 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 
 
 
-### 手順 3:WebMapの表示
+### 手順 3: WebMapの表示
 
+#### ArcGISXamarinPage.xaml
+
+
+```xml
+  <Grid>
+    <esriUI:MapView x:Name="MyMapView"/>
+  </Grid>
+```
+
+```xml
+  xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+  xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
+```
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	         xmlns:local="clr-namespace:ArcGISXamarin"
+	         xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+                 xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
+	         x:Class="ArcGISXamarin.ArcGISXamarinPage">
+
+  <Grid>
+    <esriUI:MapView x:Name="MyMapView"/>
+  </Grid>
+
+</ContentPage>
+```
+#### ArcGISXamarinPage.xaml.cs
+
+```csharp
+using Xamarin.Forms;
+using Esri.ArcGISRuntime;
+using Esri.ArcGISRuntime.Mapping;
+using System;
+
+namespace ArcGISXamarin
+{
+	public partial class ArcGISXamarinPage : ContentPage
+	{
+		public ArcGISXamarinPage()
+		{
+			InitializeComponent();
+
+			Initialize();
+		}
+
+		private async void Initialize()
+		{
+			// Web マップの URL を指定してマップを作成
+			var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.html?id=9a6a1c9f857a4a68a6e405bb5917e620"));
+
+			// マップビューのマップに設定 
+			MyMapView.Map = webMap;
+
+			await MyMapView.Map.LoadAsync();
+
+		}
+	}
+}
+```
 
 ##### アプリの実行
 
 
-### 手順 4:機能追加
+### 手順 4: 機能追加
 
 ここまで作成したアプリについて以下の機能を追加してみましょう。
 
 #### 1. ジオコーディング
 店舗情報や顧客情報などに含まれる住所情報を XY 座標に変換し地図上にマッピングすることができます。
+
+#### ArcGISXamarinPage.xaml
+
+```xml
+ <Grid>
+	<Grid.RowDefinitions>
+ 	  <RowDefinition Height="25" />			
+ 	  <RowDefinition Height="auto" />
+	  <RowDefinition Height="*" />
+	</Grid.RowDefinitions>
+		
+    <StackLayout Orientation="Vertical" Grid.Row="1">
+      <Entry x:Name="addressTextBox" Text="東京都千代田区平河町2-7-1" />
+      <Button x:Name="geocoording" Text=" 検索 " Clicked="geocoording_Click" />
+    </StackLayout>
+
+	<esriUI:MapView x:Name="MyMapView" Grid.Row="2"/>
+
+  </Grid>
+```
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	         xmlns:local="clr-namespace:ArcGISXamarin" 
+	         xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+                 xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
+	         x:Class="ArcGISXamarin.ArcGISXamarinPage">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="25" />			
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+		
+    <StackLayout Orientation="Vertical" Grid.Row="1">
+      <Entry x:Name="addressTextBox" Text="東京都千代田区平河町2-7-1" />
+      <Button x:Name="geocoording" Text=" 検索 " Clicked="geocoording_Click" />
+    </StackLayout>
+
+    <esriUI:MapView x:Name="MyMapView" Grid.Row="2"/>
+
+  </Grid>
+</ContentPage>
+```
+
+
+#### ArcGISXamarinPage.xaml.cs
+
+```csharp
+using Xamarin.Forms;
+using Esri.ArcGISRuntime;
+using Esri.ArcGISRuntime.Mapping;
+using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Symbology;
+using Esri.ArcGISRuntime.UI;
+using Esri.ArcGISRuntime.Tasks.Geocoding;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+#if WINDOWS_UWP
+using Colors = Windows.UI.Colors;
+#else
+using Colors = System.Drawing.Color;
+#endif
+
+namespace ArcGISXamarin
+{
+	public partial class ArcGISXamarinPage : ContentPage
+	{
+
+		//ArcGIS Online ジオコーディングサービスの URL
+		private const string WORLD_GEOCODE_SERVICE_URL = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
+
+		//住所検索結果表示用のグラフィックスオーバーレイ
+		private GraphicsOverlay geocodeResultGraphicsOverlay;
+
+		//住所検索用のジオコーディング タスク  
+		private LocatorTask onlineLocatorTask;
+
+		//マップが操作可能であるかどうかを示す変数
+		private bool isMapReady;
+
+
+		public ArcGISXamarinPage()
+		{
+			InitializeComponent();
+
+			Initialize();
+		}
+
+		private async void Initialize()
+		{
+
+			// Web マップの URL を指定してマップを作成
+			var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.html?id=9a6a1c9f857a4a68a6e405bb5917e620"));
+
+			// マップビューのマップに設定 
+			MyMapView.Map = webMap;
+
+			//住所検索用のジオコーディング タスクを初期化
+			onlineLocatorTask = await LocatorTask.CreateAsync(new Uri(WORLD_GEOCODE_SERVICE_URL));
+
+			// グラフィックス オーバーレイが存在しない場合は、新規に追加
+			if (MyMapView.GraphicsOverlays.Count == 0)
+			{
+				geocodeResultGraphicsOverlay = new GraphicsOverlay()
+				{
+					Renderer = createGeocoordingSymbol(),
+				};
+				MyMapView.GraphicsOverlays.Add(geocodeResultGraphicsOverlay);
+			}
+
+			isMapReady = true;
+		}
+
+		// ジオコーディングの実行
+		private async void geocoording_Click(object sender, EventArgs e)
+		{
+			//マップが準備できていなければ処理を行わない
+			if (!isMapReady) return;
+
+			//住所検索用のパラメータを作成
+			var geocodeParams = new GeocodeParameters
+			{
+				MaxResults = 5,
+				OutputSpatialReference = SpatialReferences.WebMercator,
+				CountryCode = "Japan",
+				OutputLanguage = new System.Globalization.CultureInfo("ja-JP"),
+			};
+
+			try
+			{
+				//住所の検索
+				var resultCandidates = await onlineLocatorTask.GeocodeAsync(addressTextBox.Text, geocodeParams);
+
+				//住所検索結果に対する処理（1つ以上候補が返されていれば処理を実行）
+				if (resultCandidates != null && resultCandidates.Count > 0)
+				{
+					//現在の結果を消去
+					geocodeResultGraphicsOverlay.Graphics.Clear();
+
+					//常に最初の候補を採用
+					var candidate = resultCandidates.FirstOrDefault();
+
+					//最初の候補からグラフィックを作成
+					Graphic locatedPoint = new Graphic()
+					{
+						Geometry = candidate.DisplayLocation,
+					};
+
+					//住所検索結果表示用のグラフィックスオーバーレイにグラフィックを追加
+					geocodeResultGraphicsOverlay.Graphics.Add(locatedPoint);
+
+					//追加したグラフィックの周辺に地図を拡大
+					await MyMapView.SetViewpointCenterAsync((MapPoint)locatedPoint.Geometry, 66112);
+				}
+				//候補が一つも見つからない場合の処理
+				else
+				{
+					await DisplayAlert("住所検索","該当する場所がみつかりません。", "OK");
+				}
+			}
+			//エラーが発生した場合の処理
+			catch (Exception ex)
+			{
+				await DisplayAlert("住所検索", string.Format("{0}", ex.Message), "OK");
+			}
+		}
+
+		// 住所検索結果用のシンボル作成
+		private SimpleRenderer createGeocoordingSymbol()
+		{
+			SimpleMarkerSymbol resultGeocoordingSymbol = new SimpleMarkerSymbol()
+			{
+				Style = SimpleMarkerSymbolStyle.Circle,
+				Size = 12,
+				Color = Colors.Blue,
+			};
+
+			SimpleRenderer resultRenderer = new SimpleRenderer() { Symbol = resultGeocoordingSymbol };
+
+			return resultRenderer;
+		}
+
+	}
+}
+```
 
 ##### アプリの実行
 
