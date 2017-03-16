@@ -1,16 +1,7 @@
 ﻿using Xamarin.Forms;
 using Esri.ArcGISRuntime;
 using Esri.ArcGISRuntime.Mapping;
-using Esri.ArcGISRuntime.UI.Controls;
-using Esri.ArcGISRuntime.Data;
-using Esri.ArcGISRuntime.Geometry;
-using Esri.ArcGISRuntime.UI;
-using Esri.ArcGISRuntime.Symbology;
 using System;
-using System.Drawing;
-using System.Collections;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace ArcGISXamarin
 {
@@ -31,6 +22,8 @@ namespace ArcGISXamarin
 
 			// マップビューのマップに設定 
 			MyMapView.Map = webMap;
+
+			await MyMapView.Map.LoadAsync();
 
 			// マップがロードされた際の処理
 			if (MyMapView.Map.LoadStatus == LoadStatus.Loaded)
