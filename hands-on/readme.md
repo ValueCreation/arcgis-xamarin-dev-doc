@@ -45,7 +45,7 @@ App Name には任意の名前（例：ArcGISXamarin）を入力して、Shard C
 
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_4.png" width="520px">
 
-### 手順 2:ArcGIS Runtime SDK NuGet パッケージのインストール
+### 手順 2: ArcGIS Runtime SDK NuGet パッケージのインストール
 
 ArcGIS Runtime SDK for .NET は、NuGet パッケージからインストールすることができます。
 NuGet パッケージのインストールは、Android、iOS とそれぞれに対してインストールを行います。
@@ -78,7 +78,7 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 
 
 
-### 手順 3:WebMapの表示
+### 手順 3: WebMapの表示
 
 ### ArcGISXamarinPage.xaml
 
@@ -100,7 +100,7 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 	         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	         xmlns:local="clr-namespace:ArcGISXamarin"
 	         xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
-           xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
+                 xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
 	         x:Class="ArcGISXamarin.ArcGISXamarinPage">
 
   <Grid>
@@ -110,14 +110,44 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 </ContentPage>
 ```
 
+```csharp
+using Xamarin.Forms;
+using Esri.ArcGISRuntime;
+using Esri.ArcGISRuntime.Mapping;
+using System;
 
+namespace ArcGISXamarin
+{
+	public partial class ArcGISXamarinPage : ContentPage
+	{
+		public ArcGISXamarinPage()
+		{
+			InitializeComponent();
+
+			Initialize();
+		}
+
+		private async void Initialize()
+		{
+			// Web マップの URL を指定してマップを作成
+			var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.html?id=9a6a1c9f857a4a68a6e405bb5917e620"));
+
+			// マップビューのマップに設定 
+			MyMapView.Map = webMap;
+
+			await MyMapView.Map.LoadAsync();
+
+		}
+	}
+}
+```
 
 
 
 ##### アプリの実行
 
 
-### 手順 4:機能追加
+### 手順 4: 機能追加
 
 ここまで作成したアプリについて以下の機能を追加してみましょう。
 
