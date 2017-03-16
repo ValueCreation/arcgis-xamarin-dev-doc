@@ -80,6 +80,39 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 
 ### 手順 3:WebMapの表示
 
+### ArcGISXamarinPage.xaml
+
+
+```xml
+  <Grid>
+    <esriUI:MapView x:Name="MyMapView"/>
+  </Grid>
+```
+
+```xml
+  xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+  xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
+```
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	         xmlns:local="clr-namespace:ArcGISXamarin"
+	         xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+           xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
+	         x:Class="ArcGISXamarin.ArcGISXamarinPage">
+
+  <Grid>
+    <esriUI:MapView x:Name="MyMapView"/>
+  </Grid>
+
+</ContentPage>
+```
+
+
+
+
 
 ##### アプリの実行
 
