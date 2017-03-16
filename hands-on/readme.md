@@ -80,7 +80,7 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 
 ### 手順 3: WebMapの表示
 
-### ArcGISXamarinPage.xaml
+#### ArcGISXamarinPage.xaml
 
 
 ```xml
@@ -109,6 +109,7 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 
 </ContentPage>
 ```
+#### ArcGISXamarinPage.xaml.cs
 
 ```csharp
 using Xamarin.Forms;
@@ -141,8 +142,6 @@ namespace ArcGISXamarin
 	}
 }
 ```
-
-
 
 ##### アプリの実行
 
