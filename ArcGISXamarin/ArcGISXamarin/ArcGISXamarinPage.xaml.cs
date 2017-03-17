@@ -35,6 +35,7 @@ namespace ArcGISXamarin
 		private bool isMapReady;
 
 		private FeatureLayer myFeatureLayer;
+		private ServiceFeatureTable myFeatureTable;
 		private List<Feature> myFeatures = new List<Feature>();
 		private GraphicsOverlay myGraphicsOverlay = new GraphicsOverlay();
 
@@ -75,8 +76,22 @@ namespace ArcGISXamarin
 			{
 				// マップビューのタップ イベントを登録
 				MyMapView.GeoViewTapped += OnMapViewTapped;
+
 				// Web マップに含まれる最上位のレイヤーを取得
 				myFeatureLayer = (FeatureLayer)MyMapView.Map.OperationalLayers[1];
+
+				myFeatureTable = (ServiceFeatureTable)myFeatureLayer.FeatureTable;
+				myFeatureTable.FeatureRequestMode = FeatureRequestMode.ManualCache;
+
+				// フィーチャの検索用のパラメーターを作成
+				var queryParams = new QueryParameters();
+
+				queryParams.WhereClause = "1=1";
+
+				var outputFields = new string[] { "*" };
+
+				await myFeatureTable.PopulateFromServiceAsync(queryParams, true, outputFields);
+
 				// マップビューにグラフィック表示用のオーバレイを追加
 				MyMapView.GraphicsOverlays.Add(myGraphicsOverlay);
 			}
@@ -168,9 +183,9 @@ namespace ArcGISXamarin
 				// グラフィック オーバレイに追加したグラフィックを削除
 				myGraphicsOverlay.Graphics.Clear();
 
-				// タップした地点から250メートルのバッファーの円を作成し、グラフィックとして表示する
-				var buffer = GeometryEngine.Buffer(e.Location, 250);
-				var outLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle.DashDot, System.Drawing.Color.Black, 2);
+				// タップした地点から1000メートルのバッファーの円を作成し、グラフィックとして表示する
+				var buffer = GeometryEngine.Buffer(e.Location, 1000);
+				var outLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle.DashDot, System.Drawing.Color.Yellow, 5);
 				var fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle.Null, System.Drawing.Color.White, outLineSymbol);
 				var graphic = new Graphic(buffer, null, fillSymbol);
 
@@ -180,6 +195,7 @@ namespace ArcGISXamarin
 				var queryParams = new QueryParameters();
 				// 検索範囲を作成したバファーの円に指定
 				queryParams.Geometry = buffer;
+
 				// 検索範囲とフィーチャの空間的な関係性を指定（バファーの円の中にフィーチャが含まれる）
 				queryParams.SpatialRelationship = SpatialRelationship.Contains;
 				// フィーチャの検索を実行
@@ -196,7 +212,7 @@ namespace ArcGISXamarin
 				{
 					Feature feature = myFeatures[i];
 					// フィーチャの"Name"フィールドの属性値を取得
-					var nameStr = feature.GetAttributeValue("BuildingName");
+					var nameStr = feature.GetAttributeValue("物件名");
 					alertString = alertString + Environment.NewLine + nameStr;
 					Console.WriteLine(nameStr);
 				}
