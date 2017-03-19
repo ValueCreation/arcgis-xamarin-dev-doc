@@ -31,19 +31,19 @@ Windows でも Mac でも良いです。
 最初にプロジェクトの作成からはじめます。Xamarin Staudio の新しいソリューションから新しいプロジェクト用のテンプレートを選択します。
 今回は、Xamarin.Forms を利用して開発するため、Forms App を選択します。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_1.png" width="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_1.png" width="500px">
 
 App Name には任意の名前（例：ArcGISXamarin）を入力して、Shared Code は、 『`Use Shared Libray`』を選択します。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_2.png" width="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_2.png" width="500px">
 
 作成ボタンをクリックしてプロジェクトの作成を行います。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_3.png" width="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_3.png" width="500px">
 
 プロジェクトが作成されます。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_4.png" width="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/project_4.png" width="500px">
 
 次に ArcGIS Runtime SDK for .NET のインストールを行っていきます。
 
@@ -55,30 +55,30 @@ NuGet パッケージのインストールは、Android、iOS とそれぞれに
 #### Android
 ソリューションの 『パッケージ』 を右クリックして、『パッケージの追加』 をクリックします。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_4.png" height="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_4.png" height="500px">
 
 以下のような「パッケージを追加画面」が起動しますので、検索項目の欄に esri と入力して検索を行います。
 いくつかパッケージが表示されますが、ここでは 『ArcGISRuntime SDK for .NET - Xamarin.Forms』 を選択して、『Add Pakages』 をクリックします。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_5.png" width="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_5.png" width="500px">
 
 ライセンスの同意画面でライセンスに同意してパッケージの追加を行います。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_2.png" width="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_2.png" width="500px">
 
 #### iOS
 ソリューションの 『パッケージ』 を右クリックして、『パッケージの追加』 をクリックします。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_6.png" height="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_6.png" height="500px">
 
 以下のような「パッケージを追加画面」が起動しますので、検索項目の欄に esri と入力して検索を行います。
 いくつかパッケージが表示されますが、ここでは 『ArcGISRuntime SDK for .NET - Xamarin.Forms』 を選択して、『Add Pakages』 をクリックします。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_5.png" width="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_5.png" width="500px">
 
 ライセンスの同意画面でライセンスに同意してパッケージの追加を行います。
 
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_7.png" width="400px">
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/nuget_7.png" width="500px">
 
 これでArcGIS Runtime SDK NuGet パッケージのインストールは完了です。
 
@@ -87,8 +87,21 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 
 ### 手順 3: WebMapの表示
 
+それではここから実際に ArcGIS で作成済みの WebMap を表示していきましょう。
+
+地図を表示する部分 Xamarin.Forms ユーザーインタフェースとして、**ArcGISXamarin/ArcGISXamarinPage.xaml** を作っていきましょう。
+地図表示(ユーザインタフェース)は **XAML**(ざむる)という、マークアップ言語で書いていきます。(Extensible Application Markup Language)
+
 #### ArcGISXamarinPage.xaml
 
+まず、MapView コントロールをページに追加するには、ArcGIS Runtime assembly のプロジェクト参照に加えて、XAML 名前空間を割り当てる必要があります。
+以下の内容を追加します。
+
+```xml
+  xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+  xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
+```
+次に、ContentPage の中に、次のように Grid の中に MapView クラスを追加します：
 
 ```xml
   <Grid>
@@ -96,10 +109,7 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
   </Grid>
 ```
 
-```xml
-  xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
-  xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
-```
+【確認】現在、`ArcGISXamarinPage.xaml`は、次のようになっているはずです。
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -116,7 +126,13 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 
 </ContentPage>
 ```
+
+地図を表示する仕組みとして、Map オブジェクトと、それらを表示する MapView を利用します。Map オブジェクトには、操作レイヤー、ベースマップ、ブックマーク等の ArcGIS 固有のデータを設定することができてアプリケーションで利用することができます。MapView は、UI コンポーネントです。MapView クラスの map プロパティに、Map オブジェクトを設定することで地図を表示することができます。
+
 #### ArcGISXamarinPage.xaml.cs
+
+1. プロジェクトの中の `ArcGISXamarin/ArcGISXamarinPage.xaml` ファイルを開きます。
+1. 【コピペ】 Speaker クラスの中に、以下のプロパティを追加してください。
 
 ```csharp
 using Xamarin.Forms;
