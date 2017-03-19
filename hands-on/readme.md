@@ -187,6 +187,7 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 ### 手順 4: 機能追加
 
 それではここからモクモクタイムです。
+
 ここまで作成したアプリについて以下の好きな機能をそれぞれ追加してみましょう。
 
 ### 1. ジオコーディング
