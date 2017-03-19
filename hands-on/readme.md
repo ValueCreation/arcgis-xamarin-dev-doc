@@ -399,9 +399,6 @@ namespace ArcGISXamarin
 ### iOS
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geocoding_ios.png" height="500px">
 
-### Android
-<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geocoding_android.png" height="500px">
-
 ### 2. 空間解析
 重複するエリアの抽出や空間的な分布傾向の把握など、多様な空間解析機能を利用することができます。
 
@@ -682,6 +679,10 @@ namespace ArcGISXamarin
 
 ### アプリの実行
 
+実行後の画面はそれぞれ以下のようになります。
+
+### iOS
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geometry_ios.png" height="500px">
 
 ##　宿題
 いったん本ハンズオンではここで終了ですが、お時間のある方は 3D の地図表現に挑戦してみましょう。 
