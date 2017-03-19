@@ -95,6 +95,7 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 #### ArcGISXamarinPage.xaml
 
 まず、MapView コントロールをページに追加するには、ArcGIS Runtime assembly のプロジェクト参照に加えて、XAML 名前空間を割り当てる必要があります。
+
 以下の内容を追加します。
 
 ```xml
@@ -127,12 +128,12 @@ https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 </ContentPage>
 ```
 
-地図を表示する仕組みとして、Map オブジェクトと、それらを表示する MapView を利用します。Map オブジェクトには、操作レイヤー、ベースマップ、ブックマーク等の ArcGIS 固有のデータを設定することができてアプリケーションで利用することができます。MapView は、UI コンポーネントです。MapView クラスの map プロパティに、Map オブジェクトを設定することで地図を表示することができます。
-
 #### ArcGISXamarinPage.xaml.cs
 
+次に WebMap を呼び出し部分を作成していきましょう。
+
 1. プロジェクトの中の `ArcGISXamarin/ArcGISXamarinPage.xaml` ファイルを開きます。
-1. 【コピペ】 Speaker クラスの中に、以下のプロパティを追加してください。
+2. 以下のような内容で WebMap を呼び出す部分を作成していきます。
 
 ```csharp
 using Xamarin.Forms;
@@ -159,12 +160,19 @@ namespace ArcGISXamarin
 			// マップビューのマップに設定 
 			MyMapView.Map = webMap;
 
-			await MyMapView.Map.LoadAsync();
-
 		}
 	}
 }
 ```
+
+ここで WebMap を呼び出していますが、`id=9a6a1c9f857a4a68a6e405bb5917e620` この id を変えることで ArcGIS で作成した様々な WebMap を呼び出すことが可能です。また、ArcGIS 側で WebMap の定義（例：新しいデータの追加など）を変えるだけですぐにアプリ側にも反映することが可能です。
+
+```csharp
+// Web マップの URL を指定してマップを作成
+var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.html?id=9a6a1c9f857a4a68a6e405bb5917e620"));
+```
+
+地図を表示する仕組みとして、Map オブジェクトと、それらを表示する MapView を利用します。Map オブジェクトには、操作レイヤー、ベースマップ、ブックマーク等の ArcGIS 固有のデータを設定することができてアプリケーションで利用することができます。MapView は、UI コンポーネントです。MapView クラスの map プロパティに、Map オブジェクトを設定することで地図を表示することができます。
 
 ### アプリの実行
 
