@@ -176,6 +176,13 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 
 ### アプリの実行
 
+ここまでできたら次にアプリを実行して地図を表示してみましょう。
+
+### iOS
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/webmap_1.png" height="500px">
+
+以下のような ArcGIS であらかじめ作成した WebMap がアプリ側でも表示されているのが分かるかと思います。
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/webmap_2.png" widht="500px">
 
 ### 手順 4: 機能追加
 
