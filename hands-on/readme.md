@@ -82,14 +82,14 @@ NuGet パッケージのインストールは、Android、iOS とそれぞれに
 
 これでArcGIS Runtime SDK NuGet パッケージのインストールは完了です。
 
-インストールに関しては、以下の URL からでも確認することができます。
+インストール方法に関しては、以下の URL からでも確認することができます。
 https://developers.arcgis.com/net/latest/forms/guide/install-the-sdk.htm
 
 ### 手順 3: WebMapの表示
 
-それではここから実際に ArcGIS で作成済みの WebMap を表示していきましょう。
+ここから ArcGIS で作成済みの WebMap を Xamarin で表示していきます。
 
-地図を表示する部分 Xamarin.Forms ユーザーインタフェースとして、**ArcGISXamarin/ArcGISXamarinPage.xaml** を作っていきましょう。
+地図を表示する部分 Xamarin.Forms ユーザーインタフェースとして、**ArcGISXamarin/ArcGISXamarinPage.xaml** に UI を作成していきます。
 地図表示(ユーザインタフェース)は **XAML**(ざむる)という、マークアップ言語で書いていきます。(Extensible Application Markup Language)
 
 #### ArcGISXamarinPage.xaml
@@ -176,7 +176,7 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 
 ### アプリの実行
 
-ここまでできたら次にアプリを実行して地図を表示してみます。
+次にアプリを実行して地図を表示してみます。
 
 ### iOS
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/webmap_1.png" height="500px">
@@ -186,7 +186,7 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 
 ### 手順 4: 機能追加
 
-それではここからモクモクタイムです。
+ここからモクモクタイムです。
 
 ここまで作成したアプリについて以下の好きな機能をそれぞれ追加していきます。
 
