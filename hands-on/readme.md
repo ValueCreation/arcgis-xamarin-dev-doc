@@ -656,6 +656,9 @@ namespace ArcGISXamarin
 ### iOS
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geometry_ios.png" height="500px">
 
+### Android
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geometry_android.png" height="500px">
+
 ##　宿題
 いったん本ハンズオンではここで終了ですが、お時間のある方は 3D の地図表現に挑戦してみましょう。 
 
