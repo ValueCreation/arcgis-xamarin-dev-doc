@@ -847,76 +847,142 @@ namespace SceneSymbols
 #### iOS
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/3D_2.png" height="500px">
 
-#### SceneSymbolsPage.xaml
+#### ExtrudeGraphicsPage.xaml
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-	     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	     xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
-             xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime"
-	     xmlns:local="clr-namespace:SceneSymbols" 
-             x:Class="SceneSymbols.SceneSymbolsPage">
+             xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 				
+	     xmlns:local="clr-namespace:ExtrudeGraphics" 
+	     x:Class="ExtrudeGraphics.ExtrudeGraphicsPage">
 	     
-    <Grid>
+   <Grid>
      <esriUI:SceneView x:Name="MySceneView" />
    </Grid>
 
 </ContentPage>
 ```
 
-			var diamondSymbol = new SimpleMarkerSceneSymbol
+#### ExtrudeGraphicsPage.xaml.cs
+
+```csharp
+using Xamarin.Forms;
+using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Mapping;
+using Esri.ArcGISRuntime.Symbology;
+using Esri.ArcGISRuntime.UI;
+using System;
+
+#if WINDOWS_UWP
+using Colors = Windows.UI.Colors;
+#else
+using Colors = System.Drawing.Color;
+#endif
+
+namespace ExtrudeGraphics
+{
+	public partial class ExtrudeGraphicsPage : ContentPage
+	{
+		public ExtrudeGraphicsPage()
+		{
+			InitializeComponent();
+
+			Initialize();
+		}
+
+		private double squareSize = 0.01;
+		private double spacing = 0.01;
+		private int maxHeight = 10000;
+
+		private GraphicsOverlay graphicsOverlay;
+
+		private void Initialize()
+		{
+
+			var myScene = new Scene(Basemap.CreateTopographic());
+
+			MySceneView.Scene = myScene;
+
+			var camera = new Camera(28.4, 83, 20000, 10, 70, 300);
+			MySceneView.SetViewpointCamera(camera);
+
+			graphicsOverlay = new GraphicsOverlay();
+			graphicsOverlay.SceneProperties.SurfacePlacement = SurfacePlacement.Draped;
+			MySceneView.GraphicsOverlays.Add(graphicsOverlay);
+
+			var renderer = new SimpleRenderer();
+			var lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, Colors.White, 1);
+			renderer.Symbol = new SimpleFillSymbol(SimpleFillSymbolStyle.Solid, Colors.Blue, lineSymbol);
+			renderer.SceneProperties.ExtrusionMode = ExtrusionMode.BaseHeight;
+			renderer.SceneProperties.ExtrusionExpression = "[height]";
+			graphicsOverlay.Renderer = renderer;
+
+			var surface = new Surface();
+			var url = new System.Uri("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer");
+
+			var elevationSource = new ArcGISTiledElevationSource(url);
+			surface.ElevationSources.Add(elevationSource);
+			myScene.BaseSurface = surface;
+
+			addGraphics();
+
+		}
+
+		private void addGraphics()
+		{
+
+			//var camera = new Camera(28.4, 83, 20000, 10, 70, 300)
+			//var x = camera.Location.X - 0.01;
+			//var y = camera.Location.Y- 0.25;
+			var type = new ViewpointType();
+			var extent = MySceneView.GetCurrentViewpoint(type).TargetGeometry.Extent;
+
+			var x = extent.XMin - 0.01;
+			var y = extent.YMax + 0.25;
+
+			for (int i = 0; i < 6; i++)
 			{
-				Style = SimpleMarkerSceneSymbolStyle.Diamond,
-				Color = Colors.Blue,
-				Width = 200,
-				Height = 200,
-				Depth = 200,
-				AnchorPosition = SceneSymbolAnchorPosition.Center
-			};
+				for (int j = 0; j < 4; j++)
+				{
 
-			var sphereSymbol = new SimpleMarkerSceneSymbol
-			{
-				Style = SimpleMarkerSceneSymbolStyle.Sphere,
-				Color = Colors.Green,
-				Width = 200,
-				Height = 200,
-				Depth = 200,
-				AnchorPosition = SceneSymbolAnchorPosition.Center
-			};
+					double valueX = x + i * (squareSize + spacing);
+					double valueY = y + j * (squareSize + spacing);
+					MapPoint mapPoint = new MapPoint(valueX, valueY);
+					Geometry polygon = polygonForStartingPoint(mapPoint);
+					addGraphicsForPolygon(polygon);
 
-			var tetrahedronSymbol = new SimpleMarkerSceneSymbol
-			{
-				Style = SimpleMarkerSceneSymbolStyle.Tetrahedron,
-				Color = Colors.Lime,
-				Width = 200,
-				Height = 200,
-				Depth = 200,
-				AnchorPosition = SceneSymbolAnchorPosition.Center
-			};
-
-			symbols[0] = coneSymbol;
-			symbols[1] = cubeSymbol;
-			symbols[2] = cylinderSymbol;
-			symbols[3] = diamondSymbol;
-			symbols[4] = sphereSymbol;
-			symbols[5] = tetrahedronSymbol;
-
-			//create graphics for each symbol
-			var i = 0;
-
-			foreach (SimpleMarkerSceneSymbol symbol in symbols)
-			{
-				var point = new MapPoint(x + 0.01 * i, y, z, SpatialReferences.Wgs84);
-				var graphic = new Graphic(point, symbol);
-				graphicsOverlay.Graphics.Insert(i, graphic);
-				i = i + 1;
+				}
 			}
 
 		}
 
+		private Geometry polygonForStartingPoint(MapPoint mapPoint)
+		{
+			var polygon = new PolygonBuilder(SpatialReferences.Wgs84);
+
+			polygon.AddPoint(mapPoint.X, mapPoint.Y);
+			polygon.AddPoint(mapPoint.X, mapPoint.Y + squareSize);
+			polygon.AddPoint(mapPoint.X + squareSize, mapPoint.Y + squareSize);
+			polygon.AddPoint(mapPoint.X + squareSize, mapPoint.Y);
+
+			return polygon.ToGeometry();
+
+		}
+
+		private void addGraphicsForPolygon(Geometry polygon)
+		{
+			var graphic = new Graphic(polygon, null, null);
+
+			Random rand = new Random();
+			var randv = rand.Next() % maxHeight;
+
+			graphic.Attributes.Add("height", randv);
+
+			graphicsOverlay.Graphics.Add(graphic);
+		}
 	}
+
 }
 ```
-
-
