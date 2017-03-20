@@ -102,7 +102,7 @@ namespace ArcGISXamarin
 				// 検索結果にフィーチャのすべての属性情報（outFields の配列に "*" を指定）を含める
 				var outputFields = new string[] { "*" };
 
-				// クエリの条件に基づいてフィーチャ テーブルにデータを設定
+				// クエリの条件に基づいてフィーチャ テーブルにデータを設定する
 				await myFeatureTable.PopulateFromServiceAsync(queryParams, true, outputFields);
 
 				// マップビューにグラフィック表示用のオーバレイを追加
