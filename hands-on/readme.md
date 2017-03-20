@@ -663,13 +663,19 @@ namespace ArcGISXamarin
 ### Android
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geometry_android.png" height="500px">
 
-##　宿題
+##　その他
 いったん本ハンズオンではここで終了ですが、お時間のある方は 3D の地図表現に挑戦してみましょう。 
 
 
-### 1.宿題
+### 1. 3D
+
+#### iOS
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/3D_1.png" height="500px">
 
 
-### 2.宿題
+### 2. 3D
+
+#### iOS
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/3D_2.png" height="500px">
 
 
