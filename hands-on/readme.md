@@ -252,6 +252,32 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 
 C#側では、住所からジオコーディングを実行して、その住所の場所をポイントして表示する機能を作成していきます。
 
+ジオコーディングは ArcGIS の ArcGIS Online World Geocoding サービスを利用しています。
+ArcGIS の REST サービスを利用していましので Web サービスなどでも利用することができます。
+
+```csharp
+var geocodeServiceUrl = @"http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
+LocatorTask geocodeTask = await LocatorTask.CreateAsync(new Uri(geocodeServiceUrl));
+```
+
+住所情報と必要な住所検索に必要なパラメータを設定してジオコーディングサービスを実行します。
+
+```csharp
+//住所検索用のパラメータを作成
+var geocodeParams = new GeocodeParameters
+{
+	MaxResults = 5,
+	OutputSpatialReference = SpatialReferences.WebMercator,
+	CountryCode = "Japan",
+	OutputLanguage = new System.Globalization.CultureInfo("ja-JP"),
+};
+
+//住所の検索
+var resultCandidates = await onlineLocatorTask.GeocodeAsync(addressTextBox.Text, geocodeParams);
+```
+
+以下のコードを参考にしてジオコーディングサービスを実装していきます。
+
 ```csharp
 using Xamarin.Forms;
 using Esri.ArcGISRuntime;
