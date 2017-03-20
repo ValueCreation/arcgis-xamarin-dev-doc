@@ -425,6 +425,9 @@ namespace ArcGISXamarin
 ### iOS
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geocoding_ios.png" height="500px">
 
+### Android
+<img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/geocoding_android.png" height="500px">
+
 ### 2. 空間解析
 重複するエリアの抽出や空間的な分布傾向の把握など、多様な空間解析機能を利用することができます。
 
@@ -468,11 +471,44 @@ GIS などでは空間検索や空間解析としてよく利用される機能�
 
 #### ArcGISXamarinPage.xaml.cs
 
+C#側では、地図をタップし、タップした地点から1000メートルのバッファーの円を作成して、その円に含まれるデータを取得する処理を実装していきます。
 
+地図をタップした時のイベントを登録
+```csharp
+// マップビューのタップ イベントを登録
+MyMapView.GeoViewTapped += OnMapViewTapped;
+```
+検索の対象となる新規・中古物件用のレイヤーを取得
 
-C#側では、住所からジオコーディングを実行して、その住所から XY 座標に変換してポイントして地図上にマッピングする機能を作成していきます。
+```csharp
+// Web マップに含まれる最上位のレイヤーを取得
+myFeatureLayer = (FeatureLayer)MyMapView.Map.OperationalLayers[1];
+```
+新規・物件用のフィーチャの検索はフィーチャ テーブル （ServiceFeatureTable）に対して行います。フィーチャ サービスから作成したフィーチャ テーブル（ServiceFeatureTable）の場合、フィーチャ テーブルのフィーチャは、マップ上にレンダリングするために必要最小限の情報だけを含むように最適化されています。これにより、フィーチャを表示するための待機時間と帯域幅の消費が削減されます。フィーチャの編集やすべての属性情報を表示するような場合は完全な情報を取得するために、ローダブル パターン等を使用して、フィーチャを明示的にロードしておく必要があります。
 
+```csharp
+// フィーチャ レイヤからフィーチャ テーブルを定義
+myFeatureTable = (ServiceFeatureTable)myFeatureLayer.FeatureTable;
+```
 
+フィーチャ サービスからフィーチャを取得する場合は、 リクエスト モードの設定によってフィーチャの取得頻度とや端末上でのデータのキャッシュ方法を制御します。リクエスト モードには、OnInteractionCache、 OnInteractionNoCache、ManualCache があります。リクエスト モードはフィーチャ テーブルが初期化される前に、ServiceFeatureTable の FeatureRequestMode プロパティを使用して設定できます。今回は、ManualCache を設定しています。ManualCache は、ユーザーによるマップ操作では、フィーチャは自動的にリクエストされません。このモードを使用する場合は、ServiceFeatureTable の PopulateFromServiceAsync メソッドを使用して明示的にデータをリクエストする必要があります。
+
+```csharp
+// リクエスト モードの設定
+myFeatureTable.FeatureRequestMode = FeatureRequestMode.ManualCache;
+// フィーチャの検索用のパラメーターを作成
+var queryParams = new QueryParameters();
+// すべてのフィーチャを取得するように条件を設定
+queryParams.WhereClause = "1=1";
+// 検索結果にフィーチャのすべての属性情報（outFields の配列に "*" を指定）を含める
+var outputFields = new string[] { "*" };
+// クエリの条件に基づいてフィーチャ テーブルにデータを設定
+await myFeatureTable.PopulateFromServiceAsync(queryParams, true, outputFields);
+```
+
+詳細については[フィーチャの操作](http://esrijapan.github.io/arcgis-dev-resources/dotnet/migration-dotnet-100.x/#フィーチャの操作)をご参照ください。
+
+以下のコードを参考にして空間解析を実装していきます。				
 
 ```csharp
 using Xamarin.Forms;
@@ -555,7 +591,6 @@ namespace ArcGISXamarin
 		{
 			try
 			{
-
 				Console.WriteLine("タップしました");
 
 				// 2回目以降の検索時でフィーチャが選択されている場合は、選択を解除
@@ -602,7 +637,7 @@ namespace ArcGISXamarin
 
 				// 取得した属性値をアラート表示
 				await DisplayAlert("検索結果", alertString, "OK");
-
+				
 			}
 
 			catch (Exception ex)
