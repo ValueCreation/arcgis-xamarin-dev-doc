@@ -34,9 +34,16 @@ namespace ArcGISXamarin
 		//マップが操作可能であるかどうかを示す変数
 		private bool isMapReady;
 
+		// フィーチャーレイヤの定義
 		private FeatureLayer myFeatureLayer;
+
+		// 属性データを呼び出すためのフィーチャーテーブルの定義
 		private ServiceFeatureTable myFeatureTable;
+
+		// 検索結果のフィーチャのリスト
 		private List<Feature> myFeatures = new List<Feature>();
+
+		//空間検索表示用のグラフィックスオーバーレイ
 		private GraphicsOverlay myGraphicsOverlay = new GraphicsOverlay();
 
 
@@ -80,16 +87,22 @@ namespace ArcGISXamarin
 				// Web マップに含まれる最上位のレイヤーを取得
 				myFeatureLayer = (FeatureLayer)MyMapView.Map.OperationalLayers[1];
 
+				// フィーチャ レイヤからフィーチャ テーブルを定義
 				myFeatureTable = (ServiceFeatureTable)myFeatureLayer.FeatureTable;
+
+				// リクエスト モードの設定
 				myFeatureTable.FeatureRequestMode = FeatureRequestMode.ManualCache;
 
 				// フィーチャの検索用のパラメーターを作成
 				var queryParams = new QueryParameters();
 
+				// すべてのフィーチャを取得するように条件を設定
 				queryParams.WhereClause = "1=1";
 
+				// 検索結果にフィーチャのすべての属性情報（outFields の配列に "*" を指定）を含める
 				var outputFields = new string[] { "*" };
 
+				// クエリの条件に基づいてフィーチャ テーブルにデータを設定
 				await myFeatureTable.PopulateFromServiceAsync(queryParams, true, outputFields);
 
 				// マップビューにグラフィック表示用のオーバレイを追加

@@ -7,6 +7,7 @@
 	         x:Class="ArcGISXamarin.ArcGISXamarinPage">
 
   <Grid>
+
 	<Grid.RowDefinitions>
  	  <RowDefinition Height="25" />			
  	  <RowDefinition Height="auto" />
@@ -17,7 +18,7 @@
       <Entry x:Name="addressTextBox" Text="東京都千代田区平河町2-7-1" />
       <Button x:Name="geocoording" Text=" 検索 " Clicked="geocoording_Click" />
     </StackLayout>
-
+		
 	<esriUI:MapView x:Name="MyMapView" Grid.Row="2"/>
 
   </Grid>
