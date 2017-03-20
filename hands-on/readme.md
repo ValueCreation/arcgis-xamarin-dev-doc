@@ -176,7 +176,7 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 
 ### アプリの実行
 
-ここまでできたら次にアプリを実行して地図を表示してみましょう。
+ここまでできたら次にアプリを実行して地図を表示してみます。
 
 ### iOS
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/webmap_1.png" height="500px">
@@ -188,12 +188,12 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 
 それではここからモクモクタイムです。
 
-ここまで作成したアプリについて以下の好きな機能をそれぞれ追加してみましょう。
+ここまで作成したアプリについて以下の好きな機能をそれぞれ追加していきます。
 
 ### 1. ジオコーディング
 ジオコーディングとは店舗情報や顧客情報などに含まれる住所情報を XY 座標に変換し地図上にマッピングすることができます。
 
-今回は入力した任意の住所に対してジオコーディングを行い、その地点を表示する機能を作成していきます。
+今回は入力した任意の住所に対してジオコーディングを行い、その地点を XY 座標に変換して地図上にマッピングする機能を作成していきます。
 
 先ほど作成した **ArcGISXamarin/ArcGISXamarinPage.xaml** にジオコーディング用の UI を作っていきましょう。
 
@@ -250,17 +250,17 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 
 #### ArcGISXamarinPage.xaml.cs
 
-C#側では、住所からジオコーディングを実行して、その住所の場所をポイントして表示する機能を作成していきます。
+C#側では、住所からジオコーディングを実行して、その住所から XY 座標に変換してポイントして地図上にマッピングする機能を作成していきます。
 
-ジオコーディングは ArcGIS の ArcGIS Online World Geocoding サービスを利用しています。
-ArcGIS の REST サービスを利用していましので Web サービスなどでも利用することができます。
+ジオコーディングは ArcGIS の [ArcGIS Online World Geocoding](https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm) サービスを利用しています。
+ArcGIS の REST サービスを利用していますので Web サービスなどでも利用することができます。
 
 ```csharp
 var geocodeServiceUrl = @"http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
 LocatorTask geocodeTask = await LocatorTask.CreateAsync(new Uri(geocodeServiceUrl));
 ```
 
-住所情報と必要な住所検索に必要なパラメータを設定してジオコーディングサービスを実行します。
+住所情報と住所検索に必要なパラメータを設定してジオコーディングサービスを実行します。
 
 ```csharp
 //住所検索用のパラメータを作成
