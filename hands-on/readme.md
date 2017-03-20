@@ -184,13 +184,9 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
 ### Android
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/webmap_3.png" height="500px">
 
-以下のような ArcGIS であらかじめ作成した WebMap がアプリ側でも表示されているのが分かるかと思います。
+以下のような ArcGIS であらかじめ作成した [WebMap](https://www.arcgis.com/home/webmap/viewer.html?webmap=9a6a1c9f857a4a68a6e405bb5917e620)
+ がアプリ側でも表示されているのが分かるかと思います。
 <img src="https://github.com/ValueCreation/arcgis-xamarin-dev-doc/blob/master/hands-on/images/webmap_2.png" widht="500px">
-
-[WebMap](https://www.arcgis.com/home/webmap/viewer.html?webmap=9a6a1c9f857a4a68a6e405bb5917e620)の表示
-
-https://www.arcgis.com/home/webmap/viewer.html?webmap=9a6a1c9f857a4a68a6e405bb5917e620
-
 
 ### 手順 4: 機能追加
 
