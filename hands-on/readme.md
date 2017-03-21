@@ -214,7 +214,7 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
     </Grid.RowDefinitions>
 		
     <StackLayout Orientation="Vertical" Grid.Row="1">
-      <Entry x:Name="addressTextBox" Text="東京都千代田区平河町2-7-1" />
+      <Entry x:Name="addressTextBox" Text="千葉県千葉市中央区新千葉1丁目" />
       <Button x:Name="geocoording" Text=" 検索 " Clicked="geocoording_Click" />
     </StackLayout>
 
