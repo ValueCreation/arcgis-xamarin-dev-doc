@@ -242,7 +242,7 @@ var webMap = await Map.LoadFromUriAsync(new Uri("https://arcgis.com/home/item.ht
     </Grid.RowDefinitions>
 		
     <StackLayout Orientation="Vertical" Grid.Row="1">
-      <Entry x:Name="addressTextBox" Text="東京都千代田区平河町2-7-1" />
+      <Entry x:Name="addressTextBox" Text="千葉県千葉市中央区新千葉1丁目" />
       <Button x:Name="geocoording" Text=" 検索 " Clicked="geocoording_Click" />
     </StackLayout>
 
@@ -336,17 +336,15 @@ namespace ArcGISXamarin
 			//住所検索用のジオコーディング タスクを初期化
 			onlineLocatorTask = await LocatorTask.CreateAsync(new Uri(WORLD_GEOCODE_SERVICE_URL));
 
-			// グラフィックス オーバーレイが存在しない場合は、新規に追加
-			if (MyMapView.GraphicsOverlays.Count == 0)
+			// グラフィックス オーバーレイの新規追加
+			geocodeResultGraphicsOverlay = new GraphicsOverlay()
 			{
-				geocodeResultGraphicsOverlay = new GraphicsOverlay()
-				{
-					Renderer = createGeocoordingSymbol(),
-				};
-				MyMapView.GraphicsOverlays.Add(geocodeResultGraphicsOverlay);
-			}
+				Renderer = createGeocoordingSymbol(),
+			};
+			MyMapView.GraphicsOverlays.Add(geocodeResultGraphicsOverlay);
 
 			isMapReady = true;
+			
 		}
 
 		// ジオコーディングの実行
