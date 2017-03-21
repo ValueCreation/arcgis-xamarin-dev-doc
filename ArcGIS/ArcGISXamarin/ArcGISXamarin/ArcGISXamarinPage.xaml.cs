@@ -52,6 +52,7 @@ namespace ArcGISXamarin
 			InitializeComponent();
 
 			Initialize();
+
 		}
 
 		private async void Initialize()
@@ -66,15 +67,12 @@ namespace ArcGISXamarin
 			//住所検索用のジオコーディング タスクを初期化
 			onlineLocatorTask = await LocatorTask.CreateAsync(new Uri(WORLD_GEOCODE_SERVICE_URL));
 
-			// グラフィックス オーバーレイが存在しない場合は、新規に追加
-			if (MyMapView.GraphicsOverlays.Count == 0)
+			// グラフィックス オーバーレイの新規追加
+			geocodeResultGraphicsOverlay = new GraphicsOverlay()
 			{
-				geocodeResultGraphicsOverlay = new GraphicsOverlay()
-				{
-					Renderer = createGeocoordingSymbol(),
-				};
-				MyMapView.GraphicsOverlays.Add(geocodeResultGraphicsOverlay);
-			}
+				Renderer = createGeocoordingSymbol(),
+			};
+			MyMapView.GraphicsOverlays.Add(geocodeResultGraphicsOverlay);
 
 			isMapReady = true;
 
