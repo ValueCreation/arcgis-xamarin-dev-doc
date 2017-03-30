@@ -10,3 +10,9 @@ https://geonet.esri.com/community/developers/native-app-developers/arcgis-runtim
 Esri 側で Xamarin側 に報告しているようです。<br/>
 https://bugzilla.xamarin.com/show_bug.cgi?id=53794
 
+
+## Esri 2017 Developer Summit Demo Theater Sessions 
+[Xap a Map In Your App and Go Mobile With Xamarin](https://www.youtube.com/watch?v=TyLZ4iYoQNo&t=1499s)
+
+その他、Xamarin に関しての動画が配信されています。
+https://www.youtube.com/channel/UC_yE3TatdZKAXvt_TzGJ6mw/search?query=Xamarin
