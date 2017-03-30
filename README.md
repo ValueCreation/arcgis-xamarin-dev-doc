@@ -7,7 +7,7 @@ https://geonet.esri.com/community/developers/native-app-developers/arcgis-runtim
 
 ※ハンズオンで発生していたiOS シュミレーターがクラッシュする問題なども報告されています。
 
-Esri 側で Xamarin側 に報告しているようです。<br/>
+Esri 側で Xamarin 側 に報告しているようです。<br/>
 https://bugzilla.xamarin.com/show_bug.cgi?id=53794
 
 
